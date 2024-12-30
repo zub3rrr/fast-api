@@ -16,8 +16,11 @@ async def get_all_books():
     return BOOKS
 
 """
+1. 
 %20 means space.
 
+
+2.
 Always dynamic path parameters will be at last 
 order of reading API in FastAPI :
                                  Static > Dynamic
