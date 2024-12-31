@@ -1,3 +1,9 @@
+"""
+Scope of this project is to understand the
+1. Data validation at post request
+2. Exception handling
+"""
+
 from fastapi import FastAPI , Body
 
 app = FastAPI()
@@ -14,3 +20,6 @@ BOOKS = [
 @app.get("/books")
 async def get_all_books():
     return BOOKS
+
+
+
