@@ -41,7 +41,22 @@ class BookRequest(BaseModel):
     rating: int = Field(gt=0, lt=6)
     published_date: int = Field(gt=1999, lt=2031)
 
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "title": "A new book",
+                "author": "codingwithroby",
+                "description": "A new description of a book",
+                "rating": 5,
+                'published_date': 2029
+            }
+        }
+    }
 
+"""
+gt = greater_than
+lt = less_than
+"""
 
 
 BOOKS = [
@@ -60,6 +75,24 @@ BOOKS = [
 async def get_all_books():
     return BOOKS
 
+
+@app.get("/books/{book_id}")
+async def read_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
+        
+
+@app.get("/books/", )
+async def read_book_by_rating(book_rating: int):
+    books_to_return = []
+    for book in BOOKS:
+        if book.rating == book_rating:
+            books_to_return.append(book)
+    return books_to_return
+
+
+
 """
 Now on create book request we will implement Data Validation.
 
@@ -67,13 +100,36 @@ Now on create book request we will implement Data Validation.
 
 @app.post("/create-books")
 async def create_books(book_request:BookRequest):
-    new_book = Book(**book_request.model_dump())
-    BOOKS.append(find_book_id(new_book))
-    return new_book
+    try:
+        new_book = Book(**book_request.model_dump())
+        BOOKS.append(find_book_id(new_book))
+        return {"message": f"Book created successfully."}
+    except Exception as e:
+        return {"error": str(e)}
 
 def find_book_id(book: Book):
     book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
     return book
 
 
+@app.put("/books/update_book")
+async def update_book(book: BookRequest):
+    book_changed = False
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book.id:
+            BOOKS[i] = book
+    
+    return {"message": f"Book updated successfully."}
+
+
+@app.delete("/books/{book_id}")
+async def delete_book(book_id: int ):
+    book_changed = False
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            BOOKS.pop(i)
+            book_changed = True
+            break
+    if book_changed:
+        return {"message": f"Book deleted successfully."}
 
