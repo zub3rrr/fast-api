@@ -6,10 +6,10 @@ This project provides an Employee management API that handles employee creation,
 ```
 crud-app/
 │
-├── schemas.py          # Pydantic models for request & response validation
-├── models.py          # SQLAlchemy ORM models
-├── crud.py           # CRUD operation functions
-├── database.py       # Database engine & session setup
+├── schemas.py       # Pydantic models for request & response validation
+├── models.py        # SQLAlchemy ORM models
+├── crud.py          # CRUD operation functions
+├── database.py      # Database engine & session setup
 ├── main.py          # FastAPI app entry point
 ├── pyproject.toml   # Project metadata and dependencies
 └── README.md        # Project documentation
