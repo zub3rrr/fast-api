@@ -28,7 +28,10 @@ crud-app/
 ## Installation 
 ### 1. Clone the repository
 ```
+pip install uv
+
 git clone https://github.com/your-username/crud-app.git
+
 cd crud-app
 ```
 ### 2. Simply run below command 
